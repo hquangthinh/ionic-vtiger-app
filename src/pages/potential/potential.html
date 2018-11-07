@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{'potentials.name' | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openSortOptionsModal()">
+        <ion-icon name="reorder"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="refreshServer()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-searchbar [(ngModel)]="localSearchKeyword" (ionInput)="searchPotentials($event)" (ionCancel)="cancelSearch($event)"></ion-searchbar>
+
+  <ion-list>
+
+    <ion-item-sliding *ngFor="let item of potentials">
+      <ion-item [ngClass]="{'item-sign-contract' : item.sales_stage === 'Chốt HĐ', 'item-closed-won' : item.sales_stage === 'Closed Won', 'item-closed-lost' : item.sales_stage === 'Closed Lost' }">
+        <h2 (click)="viewPotentialDetail(item)" class="text-bold" style="font-weight:bold">{{ item.contact_name }}</h2>
+        <h3 (click)="viewPotentialDetail(item)">{{ item.sales_stage }}</h3>
+        <h3 (click)="viewPotentialDetail(item)">{{ item.potentialname }}</h3>
+      </ion-item>
+      <ion-item-options>
+          <button ion-button color="secondary" icon-left (click)="callPerson(item)">
+            <ion-icon name="call"></ion-icon> Call
+          </button>
+        <button ion-button color="primary" icon-left (click)="editPotentialDetail(item)">
+          <ion-icon name="create"></ion-icon> {{'shared.Edit' | translate}}
+        </button>
+        <button ion-button color="danger" icon-left (click)="deletePotential(item)">
+          <ion-icon name="trash"></ion-icon> {{'shared.Delete' | translate}}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <!--<ion-item> <button ion-button full color="primary" (click)="resetSearch()"> Reset Search </button> </ion-item>-->
+
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="addPotential()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+
+</ion-content>

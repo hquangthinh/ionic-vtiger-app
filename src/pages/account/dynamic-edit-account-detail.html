@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ pageTitle }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only [hidden]="!mainForm.form.valid" (click)="saveChanges()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+ 
+  <form #mainForm="ngForm">
+      <ion-list>
+        <div *ngFor="let field of formSchema.fields">
+          <ion-item> 
+            <ion-label stacked class="form-label">{{ field.label }}
+                <span class="color-danger" *ngIf="field.mandatory">*</span>
+            </ion-label>
+            <ion-input name="{{field.name}}" type="text" [(ngModel)]="model.accountname" required></ion-input>
+          </ion-item>
+        </div>     
+      </ion-list>
+  </form>
+  
+</ion-content>

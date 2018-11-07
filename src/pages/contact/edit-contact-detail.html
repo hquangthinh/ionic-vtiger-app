@@ -1,0 +1,269 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ pageTitle | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only [hidden]="!mainForm.form.valid" (click)="saveChanges()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+     
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="tabName">
+      <ion-segment-button value="summary">
+        {{ 'contacts.Basic_Information_Tab' | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="details">
+        {{ 'contacts.Extra_Information_Tab' | translate }}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <form #mainForm="ngForm">
+    <div [ngSwitch]="tabName">
+      <ion-list *ngSwitchCase="'summary'">
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.SalutationType' | translate }}</ion-label>
+          <ion-select name="salutationtype" [(ngModel)]="model.salutationtype"> 
+            <ion-option value="Anh">Anh</ion-option>
+            <ion-option value="Chị">Chị</ion-option>
+            <ion-option value="Bà">Bà</ion-option>
+            <ion-option value="Ông">Ông</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.FirstName' | translate }}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-input name="firstname" type="text" 
+            [(ngModel)]="model.firstname" 
+            required #firstname="ngModel">
+          </ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="firstname.errors && (firstname.dirty || firstname.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!firstname.errors.required">
+            {{ 'contacts.FirstNameIsRequired' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.LastName' | translate }}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-input name="lastname" type="text" [(ngModel)]="model.lastname" required #lastname="ngModel"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="lastname.errors && (lastname.dirty || lastname.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!lastname.errors.required">
+            {{ 'contacts.LastNameIsRequired' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">Mobile
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-input name="mobile" type="text" [(ngModel)]="model.mobile" required #mobile="ngModel"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="mobile.errors && (mobile.dirty || mobile.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!mobile.errors.required">
+            {{ 'contacts.MobileIsRequired' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">Email</ion-label>
+          <ion-input name="email" type="text" [(ngModel)]="model.email"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.DOB' | translate }}</ion-label>        
+          <ion-datetime name="birthday" displayFormat="DD/MM/YYYY" [(ngModel)]="model.birthday"></ion-datetime>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.Related_Car' | translate }}</ion-label>
+          <ion-select name="cf_771" [(ngModel)]="model.cf_771"> 
+            <ion-option *ngFor="let car of carList" value="{{car}}">{{car}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.Lead_Source' | translate }}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-select name="leadsource" [(ngModel)]="model.leadsource" required #leadsource="ngModel">
+            <ion-option *ngFor="let leadSrc of leadSourceList" value="{{leadSrc}}">{{leadSrc}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="leadsource.errors && (leadsource.dirty || leadsource.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!leadsource.errors.required">
+            {{ 'contacts.Lead_Source_IsRequired' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.Address_Number' | translate }}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-input name="mailingstreet" type="text" [(ngModel)]="model.mailingstreet" required #mailingstreet="ngModel"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="mailingstreet.errors && (mailingstreet.dirty || mailingstreet.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!mailingstreet.errors.required">
+            {{ 'contacts.Address_Number_IsRequired' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">Quận/Huyện{{ 'contacts.District' | translate }}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-input name="mailingstate" type="text" [(ngModel)]="model.mailingstate" required #mailingstate="ngModel"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="mailingstate.errors && (mailingstate.dirty || mailingstate.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!mailingstate.errors.required">
+            {{ 'contacts.DistrictIsRequired' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.City' | translate }}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-select name="mailingcity" [(ngModel)]="model.mailingcity" required #mailingcity="ngModel"> 
+            <ion-option *ngFor="let city of mailingCityList" value="{{city}}">{{city}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="mailingcity.errors && mailingcity.touched" class="color-danger">
+          <div class="color-danger" [hidden]="!mailingcity.errors.required">
+            {{ 'contacts.CityIsRequired' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.Country' | translate }}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-input name="mailingcountry" type="text" [(ngModel)]="model.mailingcountry" required #mailingcountry="ngModel"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="mailingcountry.errors && (mailingcountry.dirty || mailingcountry.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!mailingcountry.errors.required">
+            {{ 'contacts.CountryIsRequired' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.NVBH' | translate }}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-select name="assigned_user_id_input" [(ngModel)]="model.assigned_user_id_input" (ionChange)="onAssignedUserChange()" required #assignedUserId="ngModel"> 
+            <ion-option *ngFor="let user of allUserList" value="{{user.userId}}">{{user.fullName}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="assignedUserId.errors && (assignedUserId.dirty || assignedUserId.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!assignedUserId.errors.required">
+            {{ 'contacts.NVBH_IsRequired' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.IsConvertedFromLead' | translate }}</ion-label>
+          <ion-label>{{ model.isconvertedfromlead == '0' ? 'No' : 'Yes' }}</ion-label>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.SocialId' | translate }}</ion-label>
+          <ion-input name="cf_835" type="text" [(ngModel)]="model.cf_835"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.SocialIdDateIssue' | translate }}</ion-label>
+          <ion-datetime name="cf_837" displayFormat="DD/MM/YYYY" [(ngModel)]="model.cf_837"></ion-datetime>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.SocialIdPlaceIssue' | translate }}</ion-label>
+          <ion-input name="cf_839" type="text" [(ngModel)]="model.cf_839"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.Position' | translate }}</ion-label>
+          <ion-input name="title" type="text" [(ngModel)]="model.title"></ion-input>
+        </ion-item>
+
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'details'"> 
+
+        <ion-item> 
+          <ion-title>{{ 'contacts.CarCustomerIsUsing' | translate }}</ion-title>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.CarMaker' | translate }}</ion-label>
+          <ion-select name="cf_775" [(ngModel)]="model.cf_775"> 
+            <ion-option *ngFor="let carMan of carManList" value="{{carMan}}">{{carMan}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.CarTypeCustomerIsUsing' | translate }}</ion-label>
+          <ion-input name="cf_797" type="text" [(ngModel)]="model.cf_797"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.Year' | translate }}</ion-label>
+          <ion-select name="cf_777" [(ngModel)]="model.cf_777"> 
+            <ion-option *ngFor="let year of yearList" value="{{year}}">{{year}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.TotalKm' | translate }}</ion-label>
+          <ion-input name="cf_779" type="text" [(ngModel)]="model.cf_779"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.CarPlateNumber' | translate }}</ion-label>
+          <ion-input name="cf_861" type="text" [(ngModel)]="model.cf_861"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.CarBoneNumber' | translate }}</ion-label>
+          <ion-input name="cf_863" type="text" [(ngModel)]="model.cf_863"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'contacts.CarEngineNumber' | translate }}</ion-label>
+          <ion-input name="cf_865" type="text" [(ngModel)]="model.cf_865"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-title>{{ 'contacts.Description' | translate }}</ion-title>
+        </ion-item>
+
+        <ion-item> 
+          <ion-textarea name="description" [(ngModel)]="model.description"></ion-textarea>
+        </ion-item>
+
+      </ion-list>
+
+    </div>
+  </form>
+</ion-content>

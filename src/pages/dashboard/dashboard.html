@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>SalesEDGE CRM</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col width-100>
+        <h3>Thống kê trong tháng</h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col width-50>
+        <ion-card color="light" (click)="openPage(0)">
+          <ion-card-header color="light-blue">
+            <ion-icon name="calendar" item-left></ion-icon>
+            {{cards[0].totalCount}}
+          </ion-card-header>
+          <ion-card-content class="text-bold">
+            {{cards[0].titleKey | translate}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col width-50>
+        <ion-card color="light" (click)="openPage(2)">
+          <ion-card-header color="light-blue">
+            <ion-icon name="contacts" item-left></ion-icon>
+            {{cards[2].totalCount}}
+          </ion-card-header>
+          <ion-card-content class="text-bold">
+            {{cards[2].titleKey | translate}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col width-50>
+        <ion-card color="light" (click)="openPage(3)">
+          <ion-card-header color="light-blue">
+            <ion-icon name="people" item-left></ion-icon>
+            {{cards[3].totalCount}}
+          </ion-card-header>
+          <ion-card-content class="text-bold">
+            {{cards[3].titleKey | translate}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col width-50>
+        <ion-card color="light" (click)="openPage(4)">
+          <ion-card-header color="danger">
+            <ion-icon name="stats" item-left></ion-icon>
+            {{cards[4].totalCount}}
+          </ion-card-header>
+          <ion-card-content class="text-bold">
+            {{cards[4].titleKey | translate}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col width-50>
+        <ion-card color="light" (click)="openPage(1)">
+          <ion-card-header color="light-blue">
+            <ion-icon name="alert" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold">
+            {{ 'Menu.Alerts' | translate}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col width-50>
+        <ion-card color="light" (click)="openPage(5)">
+          <ion-card-header color="light-blue">
+            <ion-icon name="settings" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold">
+            {{ 'Menu.Settings' | translate}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+  <!--<ion-list>
+    <ion-list-header class="text-bold">{{ 'dashboard.Recent_Activities' | translate }}</ion-list-header>
+    <ion-item *ngFor="let recentItem of recentActivities">
+      <span ion-text color="danger">{{ recentItem.modifiedUser.label }}</span>
+      <span ion-text small color="gray">{{ recentItem.modifiedTime | amTimeAgo }}</span>
+      <p></p>
+      <p>{{ recentItem.statusLabel }}</p>
+      <p>{{ recentItem.label }}</p>
+    </ion-item>
+  </ion-list>-->
+
+</ion-content>

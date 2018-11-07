@@ -1,0 +1,24 @@
+.item-sign-contract {
+    // color: color($colors, light-blue, base);
+    color: whitesmoke;
+    background-color: color($colors, light-blue, base);
+}
+
+.item-closed-won {
+  // color: color($colors, gray, base);
+  background-color: color($colors, gray, base);
+}
+
+.item-closed-lost {
+  // color: color($colors, danger, base);
+  color: whitesmoke;
+  background-color: color($colors, danger, base);
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-phone {
+  text-decoration: none;
+}

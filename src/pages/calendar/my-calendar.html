@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Lịch Lái Thử</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="refreshServer()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-searchbar (ionInput)="searchCalendars($event)"></ion-searchbar>
+
+  <ion-card *ngFor="let groupItem of calendars" class="cards-list-calendar">
+
+    <ion-card-header>
+      {{ groupItem.groupKey | date:'mediumDate' }}
+    </ion-card-header>
+
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of groupItem.values">
+        <ion-item (click)="viewCalendarDetail(item)">
+          <h2>{{ item.subject }}</h2>
+          <h3>{{ item.date_start | amDateFormat:'LL' }} {{ item.time_start | amDateFormat: 'HH:mm' }}</h3>
+          <ion-icon name="checkmark-circle" *ngIf="item.taskstatus === 'Held' || item.taskstatus === 'Completed' "></ion-icon>
+          <ion-icon name="flag" *ngIf="item.taskstatus === 'Planned' "></ion-icon>
+          <ion-icon name="close-circle" *ngIf="item.taskstatus === 'Not Held' || item.taskstatus === 'Deferred' "></ion-icon>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button color="primary" icon-left (click)="editCalendarDetail(item)">
+            <ion-icon name="create"></ion-icon> {{ 'shared.Edit' | translate }}
+          </button>
+          <button ion-button color="danger" icon-left (click)="deleteCalendar(item)">
+            <ion-icon name="trash"></ion-icon> {{ 'shared.Delete' | translate }}
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+  </ion-card>
+
+  <ion-list>
+    <ion-item>
+      <button ion-button full color="primary" (click)="resetSearch()"> {{ 'shared.Reset_Search' | translate }} </button>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab color="secondary"><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-fab color="secondary" (click)="addEvent()">
+        <ion-icon name="calendar"></ion-icon>
+      </button>
+      <button ion-fab color="secondary" (click)="addTask()">
+        <ion-icon name="list-box"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+
+
+</ion-content>

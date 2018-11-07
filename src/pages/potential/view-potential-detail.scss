@@ -1,0 +1,27 @@
+.avatar {
+    border-radius: 50%;
+}
+
+.form-label{
+    color:#8e9093;
+}
+
+.form-label-content {
+    padding-bottom: 5px;
+}
+
+.item-right {
+    text-align: right;
+}
+
+.contact-item-avatar {
+    background: color($colors, secondary, base);
+    color: color($colors, whitesmoke, base);
+    border-radius: 50%;
+    font-weight: bold;
+    padding: 10px 10px 10px 13px;
+}
+
+.item-header {
+  background-color: darkgrey;
+}

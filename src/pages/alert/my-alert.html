@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>My Alerts</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>  
+
+  <ion-card *ngFor="let item of alertList" (click)="viewAlertDetails(item)">
+    <ion-card-header color="danger">
+      <ion-icon name="{{item.iconName}}" item-left></ion-icon>
+      {{item.name}} - {{item.totalAlertCount}}
+    </ion-card-header>
+  </ion-card>
+
+</ion-content>

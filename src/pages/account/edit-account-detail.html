@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ pageTitle | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only [hidden]="!mainForm.form.valid" (click)="saveChanges()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="tabName">
+      <ion-segment-button value="summary">
+        {{ 'accounts.Main_Info_Tab' | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="details">
+        {{ 'accounts.More_Info_Section' | translate }}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <form #mainForm="ngForm">
+    <div [ngSwitch]="tabName">
+      <ion-list *ngSwitchCase="'summary'">
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Company_Name' | translate }}
+              <span class="color-danger">*</span>
+          </ion-label>
+          <ion-input name="accountname" type="text" [(ngModel)]="model.accountname" required #accountname="ngModel"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="accountname.errors && (accountname.dirty || accountname.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!accountname.errors.required">
+            {{ 'accounts.Company_Name_Required' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">Website</ion-label>
+          <ion-input name="website" type="text" [(ngModel)]="model.website"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Phone' | translate }}            
+          </ion-label>
+          <ion-input name="phone" type="text" [(ngModel)]="model.phone"></ion-input>
+        </ion-item>        
+
+        <ion-item> 
+          <ion-label stacked class="form-label">Email(1)</ion-label>
+          <ion-input name="email1" type="text" [(ngModel)]="model.email1"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">Email(2)</ion-label>
+          <ion-input name="email2" type="text" [(ngModel)]="model.email2"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Company_Owner' | translate }}</ion-label>
+          <ion-input name="ownership" type="text" [(ngModel)]="model.ownership"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Company_TaxCode' | translate }}            
+          </ion-label>
+          <ion-input name="Company_TaxCode" type="text" [(ngModel)]="model.cf_921"></ion-input>
+        </ion-item>        
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Company_DOE' | translate }}            
+          </ion-label>          
+          <ion-datetime name="Company_DOE" displayFormat="DD/MM/YYYY" [(ngModel)]="model.cf_963"></ion-datetime>
+        </ion-item>        
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Company_Industry' | translate }}            
+          </ion-label>
+          <ion-input name="Company_Industry" type="text" [(ngModel)]="model.cf_965"></ion-input>
+        </ion-item>        
+
+        <ion-item> 
+          <ion-label stacked class="form-label">NVBH
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-select name="assigned_user_id_input" [(ngModel)]="model.assigned_user_id_input" (ionChange)="onAssignedUserChange()" required #assignedUserId="ngModel"> 
+            <ion-option *ngFor="let user of allUserList" value="{{user.userId}}">{{user.fullName}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="assignedUserId.errors && (assignedUserId.dirty || assignedUserId.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!assignedUserId.errors.required">
+            {{ 'accounts.NVBH_Required' | translate }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Cost' | translate }}</ion-label>
+          <ion-input name="cf_799" type="text" [(ngModel)]="model.cf_799"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-title>{{ 'accounts.Detail_Address' | translate }}</ion-title>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Address_Number' | translate }}            
+          </ion-label>
+          <ion-input name="bill_street" type="text" [(ngModel)]="model.bill_street"></ion-input>
+        </ion-item>        
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Address_Number' | translate }}(2)</ion-label>
+          <ion-input name="ship_street" type="text" [(ngModel)]="model.ship_street"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.District' | translate }}            
+          </ion-label>
+          <ion-input name="bill_state" type="text" [(ngModel)]="model.bill_state"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.District' | translate }}(2)</ion-label>
+          <ion-input name="ship_state" type="text" [(ngModel)]="model.ship_state"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.City' | translate }}            
+          </ion-label>
+          <ion-select name="cf_789" [(ngModel)]="model.cf_789"> 
+            <ion-option *ngFor="let city of mailingCityList" value="{{city}}">{{city}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.City' | translate }}(2)</ion-label>
+          <ion-select name="cf_791" [(ngModel)]="model.cf_791"> 
+            <ion-option *ngFor="let city of mailingCityList" value="{{city}}">{{city}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Country' | translate }}            
+          </ion-label>
+          <ion-input name="bill_country" type="text" [(ngModel)]="model.bill_country"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Country' | translate }}(2)</ion-label>
+          <ion-input name="ship_country" type="text" [(ngModel)]="model.ship_country"></ion-input>
+        </ion-item>            
+
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'details'">         
+                    
+        <ion-item> 
+          <ion-label stacked class="form-label">{{ 'accounts.Send_Mail_To_Sales' | translate }}</ion-label>
+          <ion-checkbox name="notify_owner" color="dark" [(ngModel)]="model.notify_owner"></ion-checkbox>        
+        </ion-item>      
+
+        <ion-item> 
+          <ion-title>{{ 'accounts.Description_Section' | translate }}</ion-title>
+        </ion-item>
+
+        <ion-item> 
+          <ion-textarea name="description" [(ngModel)]="model.description"></ion-textarea>
+        </ion-item>
+
+      </ion-list>
+
+    </div>
+  </form>
+  
+</ion-content>

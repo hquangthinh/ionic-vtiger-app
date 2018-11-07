@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{'accounts.listingTitle' | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openSortOptionsModal()">
+        <ion-icon name="reorder"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="refreshServer()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-searchbar [(ngModel)]="localSearchKeyword" (ionInput)="searchAccounts($event)" (ionCancel)="cancelSearch($event)"></ion-searchbar>
+
+  <ion-list>
+
+    <ion-item-sliding *ngFor="let item of accounts">
+      <ion-item>
+        <ion-avatar item-left class="contact-item-avatar" (click)="viewAccountDetail(item)">
+          {{item.nameInitial}}
+        </ion-avatar>
+        <h2 class="text-bold" style="font-weight:bold" (click)="viewAccountDetail(item)">{{ item.accountname }}</h2>
+        <h3>{{ item.website }}</h3>
+        <h3><a class="text-phone" href="tel:{{item.phone}}">{{ item.phone }}</a></h3>
+        <h3><a class="text-phone" href="mailto:{{item.email}}">{{ item.email }}</a></h3>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="primary" icon-left (click)="editAccountDetail(item)">
+          <ion-icon name="create"></ion-icon> {{ 'shared.Edit' | translate }}
+        </button>
+        <button ion-button color="danger" icon-left (click)="deleteAccount(item)">
+          <ion-icon name="trash"></ion-icon> {{ 'shared.Delete' | translate }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <!--<ion-item> <button ion-button full color="primary" (click)="resetSearch()"> {{ 'shared.Reset_Search' | translate }} </button> </ion-item>-->
+
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="addAccount()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+
+</ion-content>

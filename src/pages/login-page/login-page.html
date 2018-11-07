@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'login.pageTitle' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-img class="img-no-bg" width="300" height="50" src="assets/images/de-logo_591x97.png"></ion-img>
+
+ <ion-list>
+
+    <ion-item>
+      <ion-label fixed>{{ 'login.CrmUrl' | translate }}</ion-label>
+      <ion-input type="text" [(ngModel)]="model.crmUrl" [disabled]="disableInputCrmUrl"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>{{ 'login.Username' | translate }}</ion-label>
+      <ion-input type="text" [(ngModel)]="model.userName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>{{ 'login.Password' | translate }}</ion-label>
+      <ion-input type="password" [(ngModel)]="model.password"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="model.password">
+      <ion-label>{{ 'login.RememberPassword' | translate }}</ion-label>
+      <ion-checkbox [(ngModel)]="rememberPassword" (ionChange)="updateRememberPassword()"></ion-checkbox>
+  </ion-item>
+
+  </ion-list>
+
+  <div padding>
+    <button ion-button color="light-blue" (click)="doLogin()" block>{{ 'login.SignIn' | translate }}</button>
+  </div>
+
+</ion-content>
