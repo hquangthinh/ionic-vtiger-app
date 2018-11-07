@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
 import { Network } from '@ionic-native/network';
+import { CallNumber } from '@ionic-native/call-number';
 
 import { HttpModule, Http } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -192,6 +193,7 @@ export function createTranslateLoader(http: HttpClient) {
     SplashScreen,
     Network,
     Camera,
+    CallNumber,
 
     AuthenticationService,
     DashboardService,

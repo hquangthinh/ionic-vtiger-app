@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController, MenuController, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
+import { CallNumber } from '@ionic-native/call-number';
 import { STORAGE_KEYS, SORTED_FIELDS  } from '../../providers/configuration-service';
 import { UserLoginSessionDto } from '../../model/login-dto';
 import { PotentialDto } from '../../model/shared-dto';
 import { KeywordSearchCommand } from '../../model/search-commands';
 import { UserService } from '../../providers/user-service';
+import { ContactService } from '../../providers/contact-service';
 import { PotentialService } from '../../providers/potential-service';
 import { DataSyncService } from '../../providers/data-sync-service';
 
@@ -36,7 +38,9 @@ export class PotentialPage extends BasePage {
       public translate: TranslateService,
       public userService: UserService,
       public potentialService: PotentialService,
-      public dataSyncService: DataSyncService
+      public dataSyncService: DataSyncService,
+      public contactService: ContactService,
+      public callNumber: CallNumber
     )
     {
         super(menuCtrl, navCtrl, loadingCtrl, alertCtrl, toastCtrl, translate);
@@ -323,6 +327,28 @@ export class PotentialPage extends BasePage {
 
     callPerson(dto: PotentialDto) {
       console.log('make call ', dto.contact_id);
+
+      if(!this.callNumber.isCallSupported()) {
+        super.showUIError('Không thể thực hiện cuộc gọi. Có thể do quyền truy cập chưa đủ.');
+        return;
+      }
+
+      this.userService.getCurrentUserSessionId().then(
+        userSessionDto => {
+          this.contactService.getContactDetail(userSessionDto, dto.contact_id)
+            .subscribe(
+              contactDto => {
+                const phoneNo = contactDto && (contactDto.phoneNumber || contactDto.homePhone);
+                if(phoneNo) {
+                  this.callNumber.callNumber(phoneNo, true)
+                    .then(res => console.log('Launched dialer!', res))
+                    .catch(err => console.log('Error launching dialer', err));
+                }
+              },
+              super.showUIError
+            );
+        }
+      );
     }
 
 }

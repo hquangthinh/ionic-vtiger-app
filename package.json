@@ -20,6 +20,7 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@ionic-native/call-number": "^4.17.0",
     "@ionic-native/camera": "^4.17.0",
     "@ionic-native/core": "~4.15.0",
     "@ionic-native/network": "^4.17.0",
@@ -29,6 +30,7 @@
     "@ngx-translate/core": "9.0.0",
     "@ngx-translate/http-loader": "2.0.0",
     "angular2-moment": "1.9.0",
+    "call-number": "1.0.1",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-network-information": "2.0.1",
     "ionic-angular": "3.9.2",
@@ -46,7 +48,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-camera": {},
-      "cordova-plugin-network-information": {}
+      "cordova-plugin-network-information": {},
+      "mx.ferreyra.callnumber": {}
     }
   }
 }
