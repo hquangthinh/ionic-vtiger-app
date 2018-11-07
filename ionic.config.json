@@ -1,0 +1,7 @@
+{
+  "name": "dealer-edges",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
