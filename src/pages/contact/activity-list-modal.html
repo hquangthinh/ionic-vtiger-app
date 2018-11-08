@@ -16,8 +16,10 @@
 
   <ion-list>
 
-    <ion-item *ngFor="let item of activities" (click)="viewActivityDetail(item)">        
-        <h2>{{ item.subject }}</h2>          
+    <ion-item *ngFor="let item of activities" (click)="viewActivityDetail(item)">
+        <h2>{{ item.subject }}</h2>
+        <h3>{{ item.eventType}}</h3>
+        <h3>{{ item.activityType}}</h3>
     </ion-item>
 
     <ion-item *ngIf="!activities || activities.length === 0">

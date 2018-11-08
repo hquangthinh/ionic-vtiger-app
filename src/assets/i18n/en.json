@@ -103,7 +103,12 @@
         "DistrictIsRequired": "Vui lòng nhập Quận/Huyện",
         "CityIsRequired": "Vui lòng nhập Tỉnh/Thành Phố",
         "CountryIsRequired": "Vui lòng nhập Quốc gia",
-        "NVBH_IsRequired": "Vui lòng nhập NVBH"
+        "NVBH_IsRequired": "Vui lòng nhập NVBH",
+        "Tasks": "Tasks",
+        "Call": "Calls",
+        "SMS": "SMS",
+        "Meeting": "Meetings",
+        "TestDrive": "Test Drives"
     },
     "accounts": {
         "name": "name",

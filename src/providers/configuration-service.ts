@@ -9,6 +9,7 @@ export const MODULE_NAMES = {
     Accounts: 'Accounts',
     Potentials: 'Potentials',
     Calendar: 'Calendar',
+    Event: 'Event',
     Users: 'Users',
     Home: 'Home',
     Campaigns: 'Campaigns',
@@ -43,7 +44,7 @@ export const API_KEYS = {
 }
 
 export const API_URLS = {
-    MsOcrApi: 'https://westus.api.cognitive.microsoft.com/vision/v1.0/ocr'    
+    MsOcrApi: 'https://westus.api.cognitive.microsoft.com/vision/v1.0/ocr'
 }
 
 export const APP_CONSTANTS = {
@@ -62,12 +63,12 @@ export const STORAGE_KEYS = {
     storedCrmUrl: 'storedCrmUrl',
     storedUserName: 'storedUserName',
     storedPassword: 'storedPassword',
-    
+
     loginStateKey: 'loginStateKey',
     userSessionId: 'userSessionId',
     userDetailDtoKey: 'userDetailDtoKey',
     allSystemUsers: 'allSystemUsers',
-    
+
     calendarModulePickList: 'calendarModulePickList',
     contactModulePickList: 'ContactModulePickList',
     accountModulePickList: 'AccountModulePickList',

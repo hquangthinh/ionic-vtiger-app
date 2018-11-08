@@ -17,6 +17,7 @@ export class ActivityListModalPage extends BasePage {
     activities: any[] = new Array();
     recordId: any;
     contactName: string;
+    activityType: string;
 
     constructor(
     public menuCtrl: MenuController,
@@ -34,6 +35,7 @@ export class ActivityListModalPage extends BasePage {
       super(menuCtrl, navCtrl, loadingCtrl, alertCtrl, toastCtrl, translate);
       this.recordId = navParams.get('recordId');
       this.contactName = navParams.get('contactName');
+      this.activityType = navParams.get('activityType');
   }
 
   ionViewDidLoad() {

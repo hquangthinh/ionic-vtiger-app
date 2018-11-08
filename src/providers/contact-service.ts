@@ -319,6 +319,22 @@ export class ContactService {
         return $obs.toPromise();
     }
 
+    public getRelatedTestDrives(sessionDto: UserLoginSessionDto, recordId: string): Promise<any> {
+      let sessionId = sessionDto.session;
+        let reqParams = `_operation=relatedRecordsWithGrouping&_session=${sessionId}&relatedmodule=${MODULE_NAMES.Event}&record=${recordId}`;
+        let header = new Headers();
+        header.append('Content-Type', 'application/x-www-form-urlencoded');
+
+        let url = sessionDto.appBaseUrl + APP_CONSTANTS.mobileApiPath;
+        var $obs = this.http.post(url, reqParams, {
+                headers: header
+            })
+            .timeout(APP_CONSTANTS.API_REQ_TIMEOUT_MS)
+            .map(res => this.extractRelatedDataList(res));
+
+        return $obs.toPromise();
+    }
+
     private extractRelatedDataList(res: Response): Array<any> {
         // let data = res.json();
         let data = JSON.parse(res.text().trim());
