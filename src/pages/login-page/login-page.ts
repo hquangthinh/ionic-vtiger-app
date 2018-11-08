@@ -121,13 +121,17 @@ export class LoginPage {
                                 loader.dismissAll();
                                 // this.navCtrl.setRoot(SyncModulesPage);
                                 this.navCtrl.setRoot(DashboardPage);
-                            }else {
-                                this.showLoginError();
-                                loader.dismissAll();
+                            } else if(data && data.error && !data.success) {
+                              this.showLoginError(data.error.message);
+                              loader.dismissAll();
+                            }
+                            else {
+                              this.showLoginError();
+                              loader.dismissAll();
                             }
                         },
                         err => {
-                            console.log('Error: %s', err);
+                            console.log('Error: ', err);
                             this.showLoginError();
                             loader.dismissAll();
                         },
@@ -139,10 +143,10 @@ export class LoginPage {
     }
 
     // private methods
-    private showLoginError() {
+    private showLoginError(error?) {
         let alert = this.alertCtrl.create({
                         title: 'Lỗi đăng nhập',
-                        subTitle: 'Xin vui lòng thử lại.',
+                        subTitle: error || 'Xin vui lòng thử lại.',
                         buttons: ['OK']
                     });
         alert.present();
