@@ -13,7 +13,7 @@ import { ContactService } from '../../providers/contact-service';
 import { DataSyncService } from '../../providers/data-sync-service';
 
 import { SORTED_FIELDS  } from '../../providers/configuration-service';
-import { KeywordSearchCommand } from '../../model/search-commands';
+import { KeywordSearchCommand, SearchContactCommand } from '../../model/search-commands';
 import { ContactDto } from '../../model/contact-dto';
 import { UserLoginSessionDto } from '../../model/login-dto';
 
@@ -262,7 +262,25 @@ export class ContactPage extends BasePage {
     }
 
     searchContacts(ev) {
-      this.searchContactsFromStorage(ev.target.value || '');
+      //this.searchContactsFromStorage(ev.target.value || '');
+      this.searchContactsFromServer(ev.target.value || '');
+    }
+
+    private searchContactsFromServer(keyword: string) {
+      this.userService.getCurrentUserSessionId().then(
+        userSession => {
+          let searchCommand = new SearchContactCommand();
+          searchCommand.keyword = keyword;
+          searchCommand.pageNumber = 0;
+          searchCommand.appBaseUrl = userSession.appBaseUrl;
+          searchCommand.sessionId = userSession.session;
+          this.contactService.searchContacts(searchCommand)
+            .subscribe(
+              searchRes => this.contacts = searchRes,
+              super.showConsoleError
+            );
+        }
+      );
     }
 
     private searchContactsFromStorage(keyword: string) {

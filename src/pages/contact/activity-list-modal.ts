@@ -15,7 +15,8 @@ import { BasePage } from '../base-page';
 export class ActivityListModalPage extends BasePage {
 
     activities: any[] = new Array();
-    recordId: any;
+    recordId: string;
+    potentialId: string;
     contactName: string;
     activityType: string;
 
@@ -34,6 +35,7 @@ export class ActivityListModalPage extends BasePage {
     ) {
       super(menuCtrl, navCtrl, loadingCtrl, alertCtrl, toastCtrl, translate);
       this.recordId = navParams.get('recordId');
+      this.potentialId = navParams.get('potentialId');
       this.contactName = navParams.get('contactName');
       this.activityType = navParams.get('activityType');
   }
@@ -41,25 +43,63 @@ export class ActivityListModalPage extends BasePage {
   ionViewDidLoad() {
     let loader = super.createLoading();
     loader.present().then(
-        () => this.loadActivities(this.recordId).then(
-            () => loader.dismissAll()
+        () => this.loadActivities(this.recordId, this.potentialId).then(
+          () => loader.dismissAll()
         )
     );
   }
 
-  private loadActivities(recordId: any): Promise<any> {
-      return this.userService.getCurrentUserSessionId().then(
-          sessionDto => {
-            return this.contactService.getRelatedCalendars(sessionDto, recordId)
-            .then(
-                data => {
-                    this.activities = this.calendarService.extractCalendarList(data);
-                    return this.activities;
-                }
-            )
-            .catch(super.showConsoleError);
+  private loadActivities(recordId: string, potentialId: string): Promise<any> {
+
+    // let fnByActivityType;
+    return this.userService.getCurrentUserSessionId().then(
+        sessionDto => {
+          if(this.activityType === 'TestDrive') {
+            return this.contactService.getRelatedTestDrives(sessionDto, recordId).then(
+              data => {
+                // console.log('TestDrive ', data);
+                this.activities = data;
+                return this.activities;
+              }
+            );
           }
-      );
+          // others
+          return this.contactService.getRelatedCalendars(sessionDto, potentialId)
+          .then(
+              data => {
+                  // console.log(data);
+                  switch(this.activityType) {
+                    case 'Task':
+                    const taskFilter = (item) => item && item.activitytype === 'Task'
+                        && item.subject.indexOf('SMS') === -1
+                        && item.subject.indexOf('Gọi') === -1
+                        && item.subject.indexOf('ĐT') === -1
+                        && item.subject.indexOf('Gặp') === -1;
+                    this.activities = data.filter(taskFilter);
+                    break;
+                    case 'Call':
+                      const callFilter = (item) => item && item.activitytype === 'Task'
+                        && (item.subject.indexOf('Gọi') > -1 || item.subject.indexOf('ĐT') > -1);
+                      this.activities = data.filter(callFilter);
+                    break;
+                    case 'SMS':
+                      const smsFilter = (item) => item && item.activitytype === 'Task' && item.subject.indexOf('SMS') > -1;
+                      this.activities = data.filter(smsFilter);
+                    break;
+                    case 'Meeting':
+                      const meetingFilter = (item) => item && item.activitytype === 'Task' && item.subject.indexOf('Gặp') > -1;
+                      this.activities = data.filter(meetingFilter);
+                    break;
+                    default:
+                      this.activities = data;
+                    break;
+                  }
+                  return this.activities;
+              }
+          )
+          .catch(super.showConsoleError);
+        }
+    );
   }
 
   viewActivityDetail(dto: any) {

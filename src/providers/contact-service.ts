@@ -28,6 +28,11 @@ export class ContactService {
         return Observable.fromPromise(countPros);
     }
 
+    // load contact list from server by query
+    // public loadContactListFromServer(sessionDto: UserLoginSessionDto, pageNumber: number): Promise<Array<ContactDto>> {
+
+    // }
+
     // return array of ContactDto -> listing page
     public loadContactListFromStorage(): Promise<Array<ContactDto>> {
         return this.storage.get(STORAGE_KEYS.contactModuleSyncData).then(
@@ -118,19 +123,21 @@ export class ContactService {
                 searchQuery = `SELECT id, salutationtype, firstname, lastname, mobile, phone, email `
                     + ` FROM Contacts `
                     + ` WHERE firstname!='????' AND lastname!='????' `
-                    + ` ORDER BY ${command.sortedField} LIMIT ${offset},${pageSize};`;
+                    + ` ORDER BY ${command.sortedField}`;
         }
         else{
             searchQuery = `SELECT id, salutationtype, firstname, lastname, mobile, phone, email `
             + ` FROM Contacts `
-            + ` WHERE firstname like '%25${command.keyword}%25' OR lastname like '%25${command.keyword}%25' `
-            + ` ORDER BY ${command.sortedField} LIMIT ${offset},${pageSize};`;
+            + ` WHERE firstname like '%25${command.keyword}%25' OR lastname like '%25${command.keyword}%25' OR phone like '%25${command.keyword}%25' OR mobile like '%25${command.keyword}%25' `
+            + ` ORDER BY ${command.sortedField}`;
         }
 
-        let reqParams = `_operation=query&_session=${command.sessionId}&module=${MODULE_NAMES.Contacts}&query=${searchQuery}`;
+        let reqParams = `_operation=query&_session=${command.sessionId}&module=${MODULE_NAMES.Contacts}&page=${command.pageNumber}&query=${searchQuery}`;
         let header = new Headers();
         header.append('Content-Type', 'application/x-www-form-urlencoded');
         let url = command.appBaseUrl + APP_CONSTANTS.mobileApiPath;
+        // console.log(searchQuery);
+        // console.log(url);
         var $obs = this.http.post(url, reqParams, {
                 headers: header
             })
@@ -303,36 +310,36 @@ export class ContactService {
         return $obs.toPromise();
     }
 
-    public getRelatedCalendars(sessionDto: UserLoginSessionDto, recordId: string): Promise<any>{
-        let sessionId = sessionDto.session;
-        let reqParams = `_operation=relatedRecordsWithGrouping&_session=${sessionId}&relatedmodule=${MODULE_NAMES.Calendar}&record=${recordId}`;
-        let header = new Headers();
-        header.append('Content-Type', 'application/x-www-form-urlencoded');
+    public getRelatedCalendars(sessionDto: UserLoginSessionDto, parentRecordId: string): Promise<any>{
+      const sessionId = sessionDto.session;
+      const query = `SELECT * FROM Calendar WHERE parent_id = '${parentRecordId}' ORDER BY modifiedtime DESC`;
+      const reqParams = `_operation=query&_session=${sessionId}&module=${MODULE_NAMES.Calendar}&page=0&query=${query}`;
+      const header = new Headers();
+      header.append('Content-Type', 'application/x-www-form-urlencoded');
+      const url = sessionDto.appBaseUrl + APP_CONSTANTS.mobileApiPath;
+      var $obs = this.http.post(url, reqParams, {
+              headers: header
+          })
+          .timeout(APP_CONSTANTS.API_REQ_TIMEOUT_MS)
+          .map(res => this.extractRelatedDataList(res));
 
-        let url = sessionDto.appBaseUrl + APP_CONSTANTS.mobileApiPath;
-        var $obs = this.http.post(url, reqParams, {
-                headers: header
-            })
-            .timeout(APP_CONSTANTS.API_REQ_TIMEOUT_MS)
-            .map(res => this.extractRelatedDataList(res));
-
-        return $obs.toPromise();
+      return $obs.toPromise();
     }
 
     public getRelatedTestDrives(sessionDto: UserLoginSessionDto, recordId: string): Promise<any> {
-      let sessionId = sessionDto.session;
-        let reqParams = `_operation=relatedRecordsWithGrouping&_session=${sessionId}&relatedmodule=${MODULE_NAMES.Event}&record=${recordId}`;
-        let header = new Headers();
-        header.append('Content-Type', 'application/x-www-form-urlencoded');
+      const sessionId = sessionDto.session;
+      const query = `SELECT * FROM Events WHERE activitytype = 'Lái thử' And contact_id = '${recordId}'`;
+      const reqParams = `_operation=query&_session=${sessionId}&module=${MODULE_NAMES.Calendar}&page=0&query=${query}`;
+      const header = new Headers();
+      header.append('Content-Type', 'application/x-www-form-urlencoded');
+      const url = sessionDto.appBaseUrl + APP_CONSTANTS.mobileApiPath;
+      var $obs = this.http.post(url, reqParams, {
+              headers: header
+          })
+          .timeout(APP_CONSTANTS.API_REQ_TIMEOUT_MS)
+          .map(res => this.extractRelatedDataList(res));
 
-        let url = sessionDto.appBaseUrl + APP_CONSTANTS.mobileApiPath;
-        var $obs = this.http.post(url, reqParams, {
-                headers: header
-            })
-            .timeout(APP_CONSTANTS.API_REQ_TIMEOUT_MS)
-            .map(res => this.extractRelatedDataList(res));
-
-        return $obs.toPromise();
+      return $obs.toPromise();
     }
 
     private extractRelatedDataList(res: Response): Array<any> {

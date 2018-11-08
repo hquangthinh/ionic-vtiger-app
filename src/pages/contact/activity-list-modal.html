@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      {{ contactName }} - Activities
+      {{ contactName }} - {{activityType}}
     </ion-title>
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
@@ -20,6 +20,9 @@
         <h2>{{ item.subject }}</h2>
         <h3>{{ item.eventType}}</h3>
         <h3>{{ item.activityType}}</h3>
+        <h3>{{ item.taskstatus}}</h3>
+        <h3>{{item.description}}</h3>
+        <h3>{{item.parent_id.label}}</h3>
     </ion-item>
 
     <ion-item *ngIf="!activities || activities.length === 0">

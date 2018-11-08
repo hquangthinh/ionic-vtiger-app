@@ -22,6 +22,7 @@ export class ViewContactDetailPage extends BasePage {
 
   selectedContactId: any;
   model : any = {};
+  firstMatchPotentialId: string;
   tabName: string = "summary";
   relatedModulesLoaded: boolean = false;
   userSession: UserLoginSessionDto;
@@ -106,30 +107,43 @@ export class ViewContactDetailPage extends BasePage {
     const sessionDto = this.userSession;
     const recordId = this.model.id;
     const res1 = this.contactService.getRelatedPotentials(sessionDto, recordId);
-    const res2 = this.contactService.getRelatedCalendars(sessionDto, recordId);
-    const res3 = this.contactService.getRelatedTestDrives(sessionDto, recordId);
+    const res2 = this.contactService.getRelatedTestDrives(sessionDto, recordId);
 
-    const taskFilter = (item) => item && item.activitytype === '';
+    const taskFilter = (item) => item && item.activitytype === 'Task'
+      && item.subject.indexOf('SMS') === -1
+        && item.subject.indexOf('Gọi') === -1
+        && item.subject.indexOf('ĐT') === -1
+        && item.subject.indexOf('Gặp') === -1;
 
     const callFilter = (item) => item && item.activitytype === 'Task'
-      && (item.subject.substring('Gọi') > -1 || item.subject.substring('ĐT') > -1);
+      && (item.subject.indexOf('Gọi') > -1 || item.subject.indexOf('ĐT') > -1);
 
-    const smsFilter = (item) => item && item.activitytype === 'Task' && item.subject.substring('SMS') > -1;
+    const smsFilter = (item) => item && item.activitytype === 'Task' && item.subject.indexOf('SMS') > -1;
 
-    const meetingFilter = (item) => item && item.activitytype === 'Task' && item.subject.substring('Gặp') > -1;
+    const meetingFilter = (item) => item && item.activitytype === 'Task' && item.subject.indexOf('Gặp') > -1;
 
-    Promise.all([res1, res2, res3])
+    Promise.all([res1, res2])
       .then(
         resultlist => {
-          this.totalRelatedOpportunities = resultlist[0].length;
-          // this.totalRelatedActivities = resultlist[1].length;
-          const calendarList = resultlist[1];
-          if(calendarList && calendarList.length > 0) {
-            this.totalRelatedActivities = calendarList.filter(taskFilter).length;
-            this.totalCalls = calendarList.filter(callFilter).length;
-            this.totalSms = calendarList.filter(smsFilter).length;
-            this.totalMeeting = calendarList.filter(meetingFilter).length;
-            this.totalTestDrive = resultlist[2].length;
+          if(resultlist[0]) {
+            this.totalRelatedOpportunities = resultlist[0].length;
+            if(this.totalRelatedOpportunities > 0) {
+              this.firstMatchPotentialId = resultlist[0][0].id;
+              this.contactService.getRelatedCalendars(sessionDto, this.firstMatchPotentialId).then(
+                calendarList => {
+                  console.log('calendarList ', calendarList);
+                  if(calendarList && calendarList.length > 0) {
+                    this.totalRelatedActivities = calendarList.filter(taskFilter).length;
+                    this.totalCalls = calendarList.filter(callFilter).length;
+                    this.totalSms = calendarList.filter(smsFilter).length;
+                    this.totalMeeting = calendarList.filter(meetingFilter).length;
+                  }
+                }
+              );
+            }
+          }
+          if(resultlist[1]){
+            this.totalTestDrive = resultlist[1].length;
           }
           loader.dismissAll();
           this.relatedModulesLoaded = true;
@@ -140,17 +154,11 @@ export class ViewContactDetailPage extends BasePage {
 
   // navigate to page to view Related Entities
   viewRelatedModules(relatedModuleName: string) {
-    // if('Opportunities' === relatedModuleName) {
-    //   let oppModal = this.modalCtrl.create(PotentialListModalPage, {recordId: this.model.id, contactName: this.model.firstname || this.model.lastname });
-    //   oppModal.present();
-    // }else if('Activities' === relatedModuleName) {
-    //   let activityModal = this.modalCtrl.create(ActivityListModalPage, {recordId: this.model.id, contactName: this.model.firstname || this.model.lastname });
-    //   activityModal.present();
-    // }
     let modalPage: any;
     let contactInfo = {
       recordId: this.model.id,
-      contactName: this.model.firstname || this.model.lastname,
+      potentialId: this.firstMatchPotentialId,
+      contactName: (this.model.firstname || '') + ' ' + (this.model.lastname || ''),
       activityType: 'Task'
     };
     switch(relatedModuleName) {
@@ -163,7 +171,7 @@ export class ViewContactDetailPage extends BasePage {
       break;
       case 'Call':
         modalPage = ActivityListModalPage;
-        contactInfo.activityType = 'Task';
+        contactInfo.activityType = 'Call';
       break;
       case 'SMS':
         modalPage = ActivityListModalPage;
