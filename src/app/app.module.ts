@@ -9,7 +9,7 @@ import { Camera } from '@ionic-native/camera';
 import { Network } from '@ionic-native/network';
 import { CallNumber } from '@ionic-native/call-number';
 
-import { HttpModule, Http } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';

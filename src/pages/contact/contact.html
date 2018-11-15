@@ -26,14 +26,17 @@
         <ion-avatar item-left class="contact-item-avatar" (click)="viewContactDetail(item)">
           {{item.nameInitial}}
         </ion-avatar>
-        <h2>{{ item.salutationType | formatSalutationType }}</h2>
-        <h2 class="text-bold" style="font-weight:bold" (click)="viewContactDetail(item)">{{ item.fullName }}</h2>
+        <!-- <h2>{{ item.salutationType | formatSalutationType }}</h2> -->
+        <h2 class="text-bold" style="font-weight:bold" (click)="viewContactDetail(item)">{{ item.salutationType | formatSalutationType }} {{ item.fullName }}</h2>
         <h3>{{item.address}}</h3>
         <h3><a class="text-phone" href="tel:{{item.phoneNumber}}">{{item.phoneNumber}}</a></h3>
         <h3><a class="text-phone" href="mailto:{{item.email}}">{{ item.email }}</a></h3>
         <h3><a class="text-phone" href="#" (click)="viewRelatedModules(item)">{{ 'contacts.Related_Car' | translate }}</a></h3>
       </ion-item>
       <ion-item-options>
+        <button ion-button color="secondary" icon-left (click)="callPerson(item)">
+            <ion-icon name="call"></ion-icon> Call
+          </button>
         <button ion-button color="primary" icon-left (click)="editContactDetail(item)">
           <ion-icon name="create"></ion-icon> {{ 'shared.Edit' | translate }}
         </button>

@@ -141,12 +141,12 @@ export class MyApp {
       let actionSheet = this.actionSheetCtrl.create({
           title: localizedText['shared.Scan_business_card'],
           buttons: [
-            // {
-            //   text: localizedText['shared.Test_Scan'],
-            //   handler: () => {
-            //     this.nav.push(ScanBusinessCardPage, { imageSrc: "assets/images/biz-card-en-1.jpg" });
-            //   }
-            // },
+            {
+              text: localizedText['shared.Test_Scan'],
+              handler: () => {
+                this.nav.push(ScanBusinessCardPage, { imageSrc: "assets/images/biz-card-en-1.jpg" });
+              }
+            },
             {
               text: localizedText['shared.Use_Gallery'],
               handler: () => {

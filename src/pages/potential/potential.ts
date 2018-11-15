@@ -326,7 +326,7 @@ export class PotentialPage extends BasePage {
     }
 
     callPerson(dto: PotentialDto) {
-      console.log('make call ', dto.contact_id);
+      // console.log('make call ', dto.contact_id);
 
       if(!this.callNumber.isCallSupported()) {
         super.showUIError('Không thể thực hiện cuộc gọi. Có thể do quyền truy cập chưa đủ.');

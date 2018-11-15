@@ -62,6 +62,11 @@ export class AccountService {
 
         dto.id = elForm.id;
         dto.accountname = this.getFieldValue(fields, 'accountname');
+        if(dto.accountname) {
+          var nameParts = this.splitAccountNames(dto.accountname);
+          dto.accountFirstName = nameParts[0];
+          dto.accountLastName = nameParts[1];
+        }
         dto.nameInitial = dto.accountname ? dto.accountname.substring(0, 1) : '';
         dto.account_no = this.getFieldValue(fields, 'account_no');
         dto.website = this.getFieldValue(fields, 'website');
@@ -69,6 +74,23 @@ export class AccountService {
         dto.email = this.getFieldValue(fields, 'email');
 
         return dto;
+    }
+
+    private splitAccountNames(name: String) {
+      if(!name)
+        return ['',''];
+
+      let parts = name.split(' ');
+
+      if(parts.length == 1)
+        return [parts[0], ''];
+
+      if(parts.length == 2)
+        return [parts[0], parts[1]];
+
+      let i = Math.ceil(parts.length / 2);
+
+      return [parts.slice(0, i).join(' '), parts.slice(i).join(' ')];
     }
 
     private getFieldValue(fields: Array<any>, fieldName: string): string {

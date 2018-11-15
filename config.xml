@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>DealersEDGE.Asia</name>
+    <name>SalesEDGE CRM</name>
     <description>An CRM by DealersEDGE.Asia</description>
     <author email="hquangthinh@gmail.com" href="http://www.dealersedge.asia/">DealersEDGE.Asia</author>
     <content src="index.html" />

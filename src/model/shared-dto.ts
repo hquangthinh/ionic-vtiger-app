@@ -37,6 +37,8 @@ export class CalendarDetailDto extends CalendarDto {
 }
 
 export class AccountDto extends BaseDto {
+    accountFirstName: string;
+    accountLastName: string;
     accountname: string;
     account_no: string;
     website: string;

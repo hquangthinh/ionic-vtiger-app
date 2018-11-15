@@ -22,16 +22,20 @@
   <ion-list>
 
     <ion-item-sliding *ngFor="let item of accounts">
-      <ion-item>
+      <ion-item class="app-list-item">
         <ion-avatar item-left class="contact-item-avatar" (click)="viewAccountDetail(item)">
           {{item.nameInitial}}
         </ion-avatar>
-        <h2 class="text-bold" style="font-weight:bold" (click)="viewAccountDetail(item)">{{ item.accountname }}</h2>
+        <h2 class="text-bold" style="font-weight:bold" (click)="viewAccountDetail(item)">{{ item.accountFirstName }}</h2>
+        <h2 class="text-bold" style="font-weight:bold" (click)="viewAccountDetail(item)">{{ item.accountLastName }}</h2>
         <h3>{{ item.website }}</h3>
         <h3><a class="text-phone" href="tel:{{item.phone}}">{{ item.phone }}</a></h3>
         <h3><a class="text-phone" href="mailto:{{item.email}}">{{ item.email }}</a></h3>
       </ion-item>
       <ion-item-options>
+        <button ion-button color="secondary" icon-left (click)="callPerson(item)">
+          <ion-icon name="call"></ion-icon> Call
+        </button>
         <button ion-button color="primary" icon-left (click)="editAccountDetail(item)">
           <ion-icon name="create"></ion-icon> {{ 'shared.Edit' | translate }}
         </button>

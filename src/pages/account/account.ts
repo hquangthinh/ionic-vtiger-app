@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController, MenuController, ToastController } from 'ionic-angular';
+import { CallNumber } from '@ionic-native/call-number';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -37,7 +38,8 @@ export class AccountPage extends BasePage {
       public translate: TranslateService,
       public userService: UserService,
       public accountService: AccountService,
-      public dataSyncService: DataSyncService
+      public dataSyncService: DataSyncService,
+      public callNumber: CallNumber
     ) {
         super(menuCtrl, navCtrl, loadingCtrl, alertCtrl, toastCtrl, translate);
     }
@@ -336,6 +338,21 @@ export class AccountPage extends BasePage {
         ]
       });
       alert.present();
+    }
+
+    callPerson(dto: AccountDto) {
+      // console.log('make call ', dto.contact_id);
+
+      if(!this.callNumber.isCallSupported()) {
+        super.showUIError('Không thể thực hiện cuộc gọi. Có thể do quyền truy cập chưa đủ.');
+        return;
+      }
+      let phoneNo = dto.phone;
+      if(phoneNo){
+        this.callNumber.callNumber(phoneNo, true)
+          .then(res => console.log('Launched dialer!', res))
+          .catch(err => console.log('Error launching dialer', err));
+      }
     }
 
 }
