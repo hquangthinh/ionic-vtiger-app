@@ -40,11 +40,13 @@ export const API_OPERATIONS = {
 
 export const API_KEYS = {
     msCvApiKey1: '641c0b564cc64f7ab5608abab0b3d4f7',
-    msCvApiKey2: '213b23d54f854937811c0c0f487aab4f'
+    msCvApiKey2: '213b23d54f854937811c0c0f487aab4f',
+    googleVisionApiKey: 'AIzaSyA_l1En96zHyNqRvL4PA1UZErIzVydK5YM'
 }
 
 export const API_URLS = {
-    MsOcrApi: 'https://westus.api.cognitive.microsoft.com/vision/v1.0/ocr'
+    MsOcrApi: 'https://westus.api.cognitive.microsoft.com/vision/v1.0/ocr',
+    GoogleVisionOcrApi: 'https://vision.googleapis.com/v1/images:annotate'
 }
 
 export const APP_CONSTANTS = {
