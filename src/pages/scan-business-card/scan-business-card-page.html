@@ -9,9 +9,12 @@
 
 <ion-content padding>
   <ion-list>
-    
+
     <ion-item>
       <img id="image" [src]="imageSrc" />
+    </ion-item>
+    <ion-item>
+      <span>{{imageSrc}}</span>
     </ion-item>
 
     <ion-item>
@@ -28,19 +31,19 @@
         <ion-option value="method1_msocr">MSOCR</ion-option>
         <ion-option value="method1_tesseract">Tesseract</ion-option>
       </ion-select>
-    </ion-item>    
+    </ion-item>
 
     <ion-item>
       <button ion-button full (click)="analyzeBizCard()">Nhập Dữ Liệu</button>
     </ion-item>
 
-  </ion-list>  
+  </ion-list>
 
   <ion-list *ngIf="bizCardLines && bizCardLines.length > 0">
 
     <ion-item *ngFor="let lineItem of bizCardLines" class="biz-card-mapping-item">
-      <ion-input type="text" [(ngModel)]="lineItem.text"></ion-input> 
-      <ion-select [(ngModel)]="lineItem.fieldId"> 
+      <ion-input type="text" [(ngModel)]="lineItem.text"></ion-input>
+      <ion-select [(ngModel)]="lineItem.fieldId">
           <ion-option *ngFor="let field of fieldList" value="{{ field.id }}">{{ field.title }}</ion-option>
       </ion-select>
     </ion-item>

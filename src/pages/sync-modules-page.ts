@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BasePage } from './base-page';
 import { DashboardPage } from './dashboard/dashboard';
 import { SettingPage } from './setting/setting';
-// import { DataSyncInfoDto } from '../model/shared-dto';
+import { DataSyncInfoDto } from '../model/shared-dto';
 // import { UserService } from '../providers/user-service';
 // import { DataSyncService } from '../providers/data-sync-service';
 import { STORAGE_KEYS } from '../providers/configuration-service';
@@ -55,27 +55,27 @@ export class SyncModulesPage extends BasePage {
         );
     }
 
-    // private needDataSyncRun(dataSyncInfo: DataSyncInfoDto): Boolean{
-    //     if(dataSyncInfo === null || dataSyncInfo === undefined)
-    //         return true;
+    private needDataSyncRun(dataSyncInfo: DataSyncInfoDto): Boolean{
+        if(dataSyncInfo === null || dataSyncInfo === undefined)
+            return true;
 
-    //     let lastSyncRun = new Date(dataSyncInfo.lastSyncDateTime);
-    //     let now = new Date();
-    //     let dateDiff = now.getTime() - lastSyncRun.getTime();
-    //     let dayInMs = 24 * 60 * 60 * 1000;
-    //     if(dateDiff / dayInMs > this.CACHE_DATA_EXPIRED_DURATION) {
-    //         console.log('sync data is our of to date');
-    //         return true;
-    //     }
-    //     console.log('sync data is up to date');
-    //     return false;
-    // }
+        let lastSyncRun = new Date(dataSyncInfo.lastSyncDateTime);
+        let now = new Date();
+        let dateDiff = now.getTime() - lastSyncRun.getTime();
+        let dayInMs = 24 * 60 * 60 * 1000;
+        if(dateDiff / dayInMs > this.CACHE_DATA_EXPIRED_DURATION) {
+            console.log('sync data is our of to date');
+            return true;
+        }
+        console.log('sync data is up to date');
+        return false;
+    }
 
-    // private performSyncDataForOffline(dataSyncInfo: DataSyncInfoDto){
-    //     console.log('performSyncDataForOffline');
-    //     let loader = this.loadingCtrl.create({
-    //         content: 'Setup data for offline access...'
-    //     });
-    //     loader.present();
-    // }
+    private performSyncDataForOffline(dataSyncInfo: DataSyncInfoDto){
+        console.log('performSyncDataForOffline');
+        let loader = this.loadingCtrl.create({
+            content: 'Setup data for offline access...'
+        });
+        loader.present();
+    }
 }

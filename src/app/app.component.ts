@@ -199,7 +199,7 @@ export class MyApp {
     }).then((imageData) => {
         // imageData is a base64 encoded string
         this.base64Image = "data:image/jpeg;base64," + imageData;
-        this.nav.push(ScanBusinessCardPage, { imageType: "DATA_URL", base64Image: this.base64Image});
+        this.nav.push(ScanBusinessCardPage, { imageType: "DATA_URL", base64Image: this.base64Image, rawImageDataBase64: imageData});
 
     }, (err) => {
         console.log(err);

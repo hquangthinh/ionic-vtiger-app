@@ -22,6 +22,7 @@ import { BasePage } from '../base-page';
 export class ScanBusinessCardPage extends BasePage {
   private imageType: string;
   private imageSrc: string;
+  private rawImageDataBase64: string;
   private langCode: string = "eng";
   private detectionMethod: string = "method1_msocr";
   private loadProgress: number = 0;
@@ -57,6 +58,7 @@ export class ScanBusinessCardPage extends BasePage {
       this.imageSrc = navParams.get("imageSrc");
     } else if ("DATA_URL" == this.imageType) {
       this.imageSrc = navParams.get("base64Image");
+      this.rawImageDataBase64 = navParams.get("rawImageDataBase64");
     } else {
       this.imageSrc = navParams.get("imageSrc");
     }
@@ -158,7 +160,7 @@ export class ScanBusinessCardPage extends BasePage {
           loader.dismissAll();
       });
     } else if (this.imageType === 'DATA_URL') {
-      this.sendAnalyzeTextRequestWithGoogleVision(this.imageSrc, loader);
+      this.sendAnalyzeTextRequestWithGoogleVision(this.rawImageDataBase64, loader);
     } else {
       super.showUIError('Invalid image data');
     }

@@ -9,7 +9,7 @@ import { OfflineService } from '../../providers/offline-service';
 
 import { LoginDto, UserLoginSessionDto } from '../../model/login-dto';
 import { DashboardPage } from '../dashboard/dashboard';
-// import { SyncModulesPage } from '../sync-modules-page';
+import { SyncModulesPage } from '../sync-modules-page';
 //import { TabsPage } from '../tabs/tabs';
 
 @Component({
@@ -119,8 +119,8 @@ export class LoginPage {
                                 this.storage.set(STORAGE_KEYS.userSessionId, userLoginSession);
 
                                 loader.dismissAll();
-                                // this.navCtrl.setRoot(SyncModulesPage);
-                                this.navCtrl.setRoot(DashboardPage);
+                                this.navCtrl.setRoot(SyncModulesPage);
+                                // this.navCtrl.setRoot(DashboardPage);
                             } else if(data && data.error && !data.success) {
                               this.showLoginError(data.error.message);
                               loader.dismissAll();
