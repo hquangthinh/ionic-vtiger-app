@@ -39,6 +39,10 @@ export class ScanBusinessCardPage extends BasePage {
     { id: 8, title: "Công ty" }
   ];
 
+  private rotateDeg = 0;
+  private imgRotateClass = 'rotate0';
+  private showFileUri =  true;
+
   private bizCardLines: Array<any> = [];
 
   constructor(
@@ -77,6 +81,21 @@ export class ScanBusinessCardPage extends BasePage {
 
   private noConnection() {
     return (this.network.type === 'none' || this.network.type === 'unknown');
+  }
+
+  // rotate image
+  rotate() {
+    this.rotateDeg += 90;
+    if(this.rotateDeg === 90)
+      this.imgRotateClass = 'rotate90';
+    else if(this.rotateDeg === 180)
+      this.imgRotateClass = 'rotate180';
+    else if(this.rotateDeg === 270)
+      this.imgRotateClass = 'rotate270';
+    else if(this.rotateDeg === 360) {
+      this.imgRotateClass = 'rotate0';
+      this.rotateDeg = 0;
+    }
   }
 
   analyzeBizCard() {
