@@ -179,7 +179,13 @@ export class DataSyncService {
                     res => {
                         // let data = res.json();
                         let data = JSON.parse(res.text().trim());
-                        this.storeModuleData(data, storage, STORAGE_KEYS.contactModuleSyncData).then( () => resolved(data) );
+                        if(data.success) {
+                          this.storeModuleData(data, storage, STORAGE_KEYS.contactModuleSyncData).then( () => resolved(data) );
+                        }
+                        else {
+                          console.error(data);
+                          resolved(data);
+                        }
                     },
                     err => {
                         console.log(err);
@@ -269,7 +275,13 @@ export class DataSyncService {
                     res => {
                         // let data = res.json();
                         let data = JSON.parse(res.text().trim());
-                        this.storeModuleData(data, storage, STORAGE_KEYS.accountModuleSyncData).then( () => resolved(data) );
+                        if(data.success) {
+                          this.storeModuleData(data, storage, STORAGE_KEYS.accountModuleSyncData).then( () => resolved(data) );
+                        }
+                        else {
+                          console.error(data);
+                          resolved(data);
+                        }
                     },
                     err => {
                         //console.log(err);

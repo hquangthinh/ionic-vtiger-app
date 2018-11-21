@@ -26,6 +26,7 @@
         <h2 (click)="viewPotentialDetail(item)" class="text-bold" style="font-weight:bold">{{ item.contact_name }}</h2>
         <h3 (click)="viewPotentialDetail(item)">{{ item.sales_stage }}</h3>
         <h3 (click)="viewPotentialDetail(item)">{{ item.potentialname }}</h3>
+        <h3 (click)="viewPotentialDetail(item)">{{ item.createdtime | amDateFormat:'LL' }}</h3>
       </ion-item>
       <ion-item-options>
         <button ion-button color="secondary" icon-left (click)="callPerson(item)">

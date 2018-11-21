@@ -70,6 +70,7 @@ export class PotentialService {
             dto.contact_name = contactDto.label;
         }
         dto.sales_stage = this.getFieldValue(fields, 'sales_stage');
+        dto.createdtime = this.getFieldObject(fields, 'createdtime');
 
         return dto;
     }

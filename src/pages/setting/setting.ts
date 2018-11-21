@@ -11,6 +11,7 @@ import { UserService } from '../../providers/user-service';
 import { ModuleService } from '../../providers/module-service';
 import { DataSyncService } from '../../providers/data-sync-service';
 import { STORAGE_KEYS } from '../../providers/configuration-service';
+import { DashboardPage } from '../dashboard/dashboard';
 
 import { BasePage } from '../base-page';
 
@@ -186,6 +187,7 @@ export class SettingPage extends BasePage {
                                                       this.storage.set(STORAGE_KEYS.dataSyncInfo, dataSyncInfo).then(() => loader.dismissAll());
                                                       this.loadLanguageSetting();
                                                       this.loadAutoRunSyncSetting();
+                                                      this.navCtrl.setRoot(DashboardPage);
                                                     }
                                                     ,err => this.handleSyncError(err, loader));
                                                   });

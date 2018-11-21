@@ -19,9 +19,9 @@ import { SyncModulesPage } from '../sync-modules-page';
 export class LoginPage {
 
     model: LoginDto = {
-        crmUrl: 'hyundai.prisma.vn',//'hyundai.prisma.vn',//hbn.prisma.vn
+        crmUrl: 'dea.prisma.vn',//'hyundai.prisma.vn',//hbn.prisma.vn
         userName: 'admin',//admin
-        password: 'admin123kcml789'//admin123kcml789
+        password: 'admin123kcml'//admin123kcml789 // admin123kcml789
     };
     rememberPassword: boolean = false;
     disableInputCrmUrl: boolean = false;
