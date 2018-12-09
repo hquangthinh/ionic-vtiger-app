@@ -193,7 +193,9 @@ export class EditAccountDetailPage extends BasePage {
         () => {
             this.model.assigned_user_id = this.model.assigned_user_id_input;
             this.model.modifiedby = this.model.assigned_user_id;
-            this.model.cf_963 = this.model.cf_963.year + '-' + this.model.cf_963.month + '-' + this.model.cf_963.day;
+            if(this.model.cf_963) {
+              this.model.cf_963 = this.model.cf_963.year + '-' + this.model.cf_963.month + '-' + this.model.cf_963.day;
+            }
             this.accountService.saveChanges(this.userSessionDto, this.model)
                 .subscribe(
                     data => {

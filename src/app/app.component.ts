@@ -58,8 +58,8 @@ export class MyApp {
       { titleKey: 'Menu.Alerts', title: 'Alerts', icon: 'alert', component: MyAlertListPage },
       { titleKey: 'Menu.Today_Calendar', title: "Today's Calendar", icon: 'calendar', component: MyCalendarPage },
       { titleKey: 'Menu.Contacts', title: 'Contacts', icon: 'contacts', component: ContactPage },
-      { titleKey: 'Menu.Accounts', title: 'Accounts', icon: 'people', component: AccountPage },
-      { titleKey: 'Menu.Potentials', title: 'Potentials', icon: 'stats', component: PotentialPage },
+      { titleKey: 'Menu.Accounts', title: 'Accounts', icon: 'office', component: AccountPage },
+      { titleKey: 'Menu.Potentials', title: 'Potentials', icon: 'logo-usd', component: PotentialPage },
       { titleKey: 'Menu.Settings', title: 'Settings', icon: 'settings', component: SettingPage }
     ];
 

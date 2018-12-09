@@ -4,6 +4,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>SalesEDGE CRM</ion-title>
+    <!-- <img class="img-no-bg" width="88.5" height="25" src="assets/images/de-logo_531x150.png"/> -->
   </ion-navbar>
 </ion-header>
 
@@ -13,60 +14,30 @@
 
     <ion-row>
       <ion-col width-100>
-        <h3>Thống kê trong tháng {{currentMonth}}</h3>
+        <h3><strong>Thống kê trong tháng {{currentMonth}}/{{currentYear}}</strong></h3>
       </ion-col>
     </ion-row>
 
     <ion-row>
 
       <ion-col width-50>
-        <ion-card color="light" (click)="openPage(0)">
-          <ion-card-header color="light-blue">
-            <ion-icon name="calendar" item-left></ion-icon>
-            {{cards[0].totalCount}}
+        <ion-card class="dashboard-card" color="light" (click)="openPage(0)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="calendar" item-left></ion-icon>
           </ion-card-header>
-          <ion-card-content class="text-bold">
-            {{cards[0].titleKey | translate}}
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{cards[0].titleKey | translate}} ({{cards[0].totalCount}})
           </ion-card-content>
         </ion-card>
       </ion-col>
 
       <ion-col width-50>
-        <ion-card color="light" (click)="openPage(2)">
-          <ion-card-header color="light-blue">
-            <ion-icon name="contacts" item-left></ion-icon>
-            {{cards[2].totalCount}}
+        <ion-card class="dashboard-card" color="light" (click)="openPage(2)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="contacts" item-left></ion-icon>
           </ion-card-header>
-          <ion-card-content class="text-bold">
-            {{cards[2].titleKey | translate}}
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-
-    </ion-row>
-
-    <ion-row>
-
-      <ion-col width-50>
-        <ion-card color="light" (click)="openPage(3)">
-          <ion-card-header color="light-blue">
-            <ion-icon name="people" item-left></ion-icon>
-            {{cards[3].totalCount}}
-          </ion-card-header>
-          <ion-card-content class="text-bold">
-            {{cards[3].titleKey | translate}}
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-
-      <ion-col width-50>
-        <ion-card color="light" (click)="openPage(4)">
-          <ion-card-header color="danger">
-            <ion-icon name="stats" item-left></ion-icon>
-            {{cards[4].totalCount}}
-          </ion-card-header>
-          <ion-card-content class="text-bold">
-            {{cards[4].titleKey | translate}}
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{cards[2].titleKey | translate}} ({{cards[2].totalCount}})
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -76,22 +47,48 @@
     <ion-row>
 
       <ion-col width-50>
-        <ion-card color="light" (click)="openPage(1)">
-          <ion-card-header color="light-blue">
-            <ion-icon name="alert" item-left></ion-icon>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(3)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="icomoon-icon-office icon-office dashboard-large-icon" name="office" item-left></ion-icon>
           </ion-card-header>
-          <ion-card-content class="text-bold">
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{cards[3].titleKey | translate}} ({{cards[3].totalCount}})
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col width-50>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(4)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="logo-usd" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{cards[4].titleKey | translate}} ({{cards[4].totalCount}})
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col width-50>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(1)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="alert" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold" color="whitesmoke">
             {{ 'Menu.Alerts' | translate}}
           </ion-card-content>
         </ion-card>
       </ion-col>
 
       <ion-col width-50>
-        <ion-card color="light" (click)="openPage(5)">
-          <ion-card-header color="light-blue">
-            <ion-icon name="settings" item-left></ion-icon>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(5)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="settings" item-left></ion-icon>
           </ion-card-header>
-          <ion-card-content class="text-bold">
+          <ion-card-content class="text-bold" color="whitesmoke">
             {{ 'Menu.Settings' | translate}}
           </ion-card-content>
         </ion-card>
@@ -100,16 +97,5 @@
     </ion-row>
 
   </ion-grid>
-
-  <!--<ion-list>
-    <ion-list-header class="text-bold">{{ 'dashboard.Recent_Activities' | translate }}</ion-list-header>
-    <ion-item *ngFor="let recentItem of recentActivities">
-      <span ion-text color="danger">{{ recentItem.modifiedUser.label }}</span>
-      <span ion-text small color="gray">{{ recentItem.modifiedTime | amTimeAgo }}</span>
-      <p></p>
-      <p>{{ recentItem.statusLabel }}</p>
-      <p>{{ recentItem.label }}</p>
-    </ion-item>
-  </ion-list>-->
 
 </ion-content>

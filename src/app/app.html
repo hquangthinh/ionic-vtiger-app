@@ -1,23 +1,24 @@
 <ion-menu [content]="content">
-  <ion-header>    
+  <ion-header>
     <ion-toolbar color="primary">
       <ion-list>
-        <ion-item color="primary" class="item-no-border">          
+        <ion-item color="primary" class="item-no-border">
           <h2> {{'Menu.Welcome' | translate}} {{ currentUserName }}</h2>
         </ion-item>
-      </ion-list>            
-    </ion-toolbar>    
+      </ion-list>
+    </ion-toolbar>
   </ion-header>
 
   <ion-content>
-    
+
     <ion-list>
 
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon class="app-menu-icon-color" [name]="p.icon" item-left></ion-icon>
+        <ion-icon *ngIf="p.icon !== 'office'" class="app-menu-icon-color" [name]="p.icon" item-left></ion-icon>
+        <ion-icon *ngIf="p.icon === 'office'" class="icomoon-icon-office icon-office app-menu-icon-color" name="office" item-left></ion-icon>
         {{p.titleKey | translate}}
       </button>
-      
+
       <button menuClose ion-item (click)="scanBusinessCard()">
         <ion-icon class="app-menu-icon-color" name="camera" item-left></ion-icon>
           {{ 'Menu.Scan_Business_Card' | translate }}

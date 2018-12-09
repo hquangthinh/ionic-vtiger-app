@@ -1,3 +1,19 @@
 .text-bold {
     font-weight: bold;
 }
+
+.dashboard-card {
+  height: 160px;
+  background-color: #4285F4;
+  text-align: center;
+}
+
+.dashboard-card:hover,
+.dashboard-card:focus,
+.dashboard-card:active {
+  background-color: #3700B3;
+}
+
+.dashboard-large-icon {
+  font-size: 4.8em;
+}

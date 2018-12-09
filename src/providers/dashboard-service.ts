@@ -32,9 +32,7 @@ export class DashboardService {
 
     public getStatisticCountForDashboard(userSessionDto: UserLoginSessionDto) : Observable<any> {
       let curDate = new Date();
-      curDate.setMonth(curDate.getMonth() + 1);
-      let dateFilter = `${curDate.getFullYear()}-${curDate.getMonth()}-1`;
-      // console.log('dashboard ', dateFilter);
+      let dateFilter = `${curDate.getFullYear()}-${curDate.getMonth()+1}-1`;
 
       // let contactCountOb = this.contactService.getContactTotalCountFromStorage();
       // let accountCountOb = this.accountService.getAccountTotalCountFromStorage();

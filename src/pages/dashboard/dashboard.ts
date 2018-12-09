@@ -29,6 +29,7 @@ export class DashboardPage extends BasePage {
     cards : Array<{ titleKey: string, title: string, totalCount: number, component: any}>;
     recentActivities: Array<RecentActivityDto>;
     currentMonth: number;
+    currentYear: number;
 
     constructor(
       public menuCtrl: MenuController,
@@ -57,6 +58,7 @@ export class DashboardPage extends BasePage {
     // ionic view life cycle hook
     ionViewDidLoad() {
       this.currentMonth = new Date().getMonth() + 1;
+      this.currentYear = new Date().getFullYear();
       const thisPage = this;
       let loader = super.createLoading();
       loader.present()
