@@ -19,7 +19,7 @@ import { SyncModulesPage } from '../sync-modules-page';
 export class LoginPage {
 
     model: LoginDto = {
-        crmUrl: 'dea.prisma.vn',//'hyundai.prisma.vn',//hbn.prisma.vn
+        crmUrl: 'hnt.prisma.vn',//'dea.prisma.vn',//'hyundai.prisma.vn',//hbn.prisma.vn
         userName: 'admin',//admin
         password: 'admin123kcml'//admin123kcml789 // admin123kcml789
     };
