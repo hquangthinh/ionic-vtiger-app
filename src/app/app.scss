@@ -22,7 +22,8 @@
 }
 
 .app-menu-icon-color {
-    color: color($colors, light-blue, base);
+    color: white;
+    //color: #387ef5;
 }
 
 .text-bold {
@@ -31,4 +32,20 @@
 
 .text-phone {
   text-decoration: none;
+}
+
+div.app-sidebar-container ion-list button {
+  background-color: #387ef5;
+  color: white;
+}
+
+ion-menu {
+  ion-content {
+   background-color:#387ef5 !important;
+   color: white;
+  }
+ }
+
+ion-list button div {
+  border: none !important;
 }
