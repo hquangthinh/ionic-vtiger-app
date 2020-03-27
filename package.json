@@ -46,7 +46,7 @@
     "mx.ferreyra.callnumber": "~0.0.2",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
-    "tesseract.js": "^1.0.10",
+    "tesseract.js": "^1.0.19",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
