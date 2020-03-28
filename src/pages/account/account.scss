@@ -1,0 +1,19 @@
+.contact-item-avatar {
+    background: color($colors, secondary, base);
+    color: color($colors, whitesmoke, base);
+    border-radius: 50%;
+    font-weight: bold;
+    padding: 10px 10px 10px 13px;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-phone {
+  text-decoration: none;
+}
+
+.app-list-item ion-label {
+  overflow: visible!important;
+}

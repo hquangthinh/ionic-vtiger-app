@@ -1,0 +1,173 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ pageTitle | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only [hidden]="!mainForm.form.valid" (click)="saveChanges()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="tabName">
+      <ion-segment-button value="summary">
+        {{'potentials.MainInfoSection' | translate}}
+      </ion-segment-button>
+      <ion-segment-button value="details">
+        {{'potentials.ExtraInfoSection' | translate}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <form #mainForm="ngForm">
+    <div [ngSwitch]="tabName">
+      <ion-list *ngSwitchCase="'summary'">
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.potentialname' | translate}}
+              <span class="color-danger">*</span>
+          </ion-label>        
+          <ion-select name="potentialname" [(ngModel)]="model.potentialname" required #potentialname="ngModel"> 
+            <ion-option *ngFor="let name of potentialNameList" value="{{name}}">{{name}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="potentialname.errors && (potentialname.dirty || potentialname.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!potentialname.errors.required">            
+            {{'potentials.potentialnameIsRequired' | translate}}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.color' | translate}}</ion-label>
+          <ion-input name="cf_867" type="text" [(ngModel)]="model.cf_867"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.customerName' | translate}}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-input name="contact_id_input" type="text" [(ngModel)]="model.contact_id_input" readonly required #contactIdInput="ngModel"></ion-input>        
+        </ion-item>
+
+        <ion-item *ngIf="contactIdInput.errors && (contactIdInput.dirty || contactIdInput.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!contactIdInput.errors.required">
+            {{'potentials.customerNameIsRequired' | translate}}
+          </div>
+        </ion-item>
+
+        <ion-item>
+          <button ion-button icon-only (click)="openContactModal()">
+            <ion-icon name="search"></ion-icon>
+          </button>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.companyName' | translate}}</ion-label>
+          <ion-input name="related_to_input" type="text" [(ngModel)]="model.related_to_input" readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <button ion-button icon-only (click)="openAccountModal()">
+            <ion-icon name="search"></ion-icon>
+          </button>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.opportunityType' | translate}}</ion-label>
+          <ion-select name="opportunity_type" [(ngModel)]="model.opportunity_type"> 
+            <ion-option *ngFor="let opType of opportunityTypeList" value="{{opType}}">{{opType}}</ion-option>
+          </ion-select>        
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.closingDate' | translate}}
+              <span class="color-danger">*</span>
+          </ion-label>        
+          <ion-datetime name="closingdate" displayFormat="DD/MM/YYYY" [(ngModel)]="model.closingdate" required #closingdate="ngModel"></ion-datetime>
+        </ion-item>
+
+        <ion-item *ngIf="closingdate.errors && (closingdate.dirty || closingdate.touched)" class="color-danger">
+          <div class="color-danger" [hidden]="!closingdate.errors.required">
+            {{'potentials.closingDateIsRequired' | translate}}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.leadSource' | translate}}
+          </ion-label>
+          <ion-select name="leadsource" [(ngModel)]="model.leadsource">
+            <ion-option *ngFor="let leadSrc of leadSourceList" value="{{leadSrc}}">{{leadSrc}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.NVBH' | translate}}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-select name="assigned_user_id_input" [(ngModel)]="model.assigned_user_id_input" (ionChange)="onAssignedUserChange()"> 
+            <ion-option *ngFor="let user of allUserList" value="{{user.userId}}">{{user.fullName}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.salesStage' | translate}}
+            <span class="color-danger">*</span>
+          </ion-label>
+          <ion-select name="sales_stage" [(ngModel)]="model.sales_stage"> 
+            <ion-option *ngFor="let item of saleStageList" value="{{item}}">{{item}}</ion-option>
+          </ion-select>        
+        </ion-item>
+
+        <ion-item *ngIf="model.sales_stageError" class="color-danger">
+          <div class="color-danger">
+            {{ model.sales_stageError }}
+          </div>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.campaign' | translate}}</ion-label>
+          <ion-select name="campaignid_input" [(ngModel)]="model.campaignid_input" (ionChange)="onCampaignSelected()"> 
+            <ion-option *ngFor="let item of campaignList" value="{{item.id}}">{{item.campaignname}}</ion-option>
+          </ion-select>        
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.probability' | translate}}</ion-label>
+          <ion-input name="probability" type="number" [(ngModel)]="model.probability"></ion-input>
+        </ion-item>
+
+        <ion-item> 
+          <ion-label stacked class="form-label">{{'potentials.estimateDeliveryDate' | translate}}</ion-label>        
+          <ion-datetime name="cf_763" displayFormat="DD/MM/YYYY" [(ngModel)]="model.cf_763"></ion-datetime>
+        </ion-item>
+
+        <ion-item> 
+            <ion-label stacked class="form-label">{{'potentials.lostReason' | translate}}</ion-label>
+          <ion-textarea name="cf_795" [(ngModel)]="model.cf_795"></ion-textarea>
+        </ion-item>
+
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'details'">         
+
+        <ion-item> 
+          <ion-title>{{'potentials.description' | translate}}</ion-title>
+        </ion-item>
+
+        <ion-item> 
+          <ion-textarea name="description" [(ngModel)]="model.description"></ion-textarea>
+        </ion-item>
+
+      </ion-list>
+
+    </div>
+  </form>
+  
+</ion-content>

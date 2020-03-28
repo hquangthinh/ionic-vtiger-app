@@ -1,0 +1,13 @@
+.form-label{
+    color:#8e9093;
+}
+
+.color-danger {
+    color: color($colors, danger, base);
+}
+
+.ios, .md {
+    .invalid {
+        border: 1px solid #ea6153;
+    }
+}

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'contacts.listingTitle' | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openSortOptionsModal()">
+        <ion-icon name="reorder"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="refreshServer()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-searchbar [(ngModel)]="localSearchKeyword" (ionInput)="searchContacts($event)" (ionCancel)="cancelSearch($event)"></ion-searchbar>
+
+  <ion-list>
+
+    <ion-item-sliding *ngFor="let item of contacts">
+      <ion-item>
+        <ion-avatar item-left class="contact-item-avatar" (click)="viewContactDetail(item)">
+          {{item.nameInitial}}
+        </ion-avatar>
+        <!-- <h2>{{ item.salutationType | formatSalutationType }}</h2> -->
+        <h2 *ngIf="item.fullName && item.fullName.length &lt; 25" class="text-bold" style="font-weight:bold" (click)="viewContactDetail(item)">{{ item.salutationType | formatSalutationType }} {{ item.fullName }}</h2>
+        <h2 *ngIf="item.fullName && item.fullName.length &gt; 25" class="text-bold" style="font-weight:bold" (click)="viewContactDetail(item)">{{ item.salutationType | formatSalutationType }} {{ item.firstName }}</h2>
+        <h2 *ngIf="item.fullName && item.fullName.length &gt; 25" class="text-bold" style="font-weight:bold" (click)="viewContactDetail(item)">{{ item.lastName }}</h2>
+        <h3>{{item.address}}</h3>
+        <h3><a class="text-phone" href="tel:{{item.phoneNumber}}">{{item.phoneNumber}}</a></h3>
+        <h3><a class="text-phone" href="mailto:{{item.email}}">{{ item.email }}</a></h3>
+        <h3><a class="text-phone" href="#" (click)="viewRelatedModules(item)">{{ 'contacts.Related_Car' | translate }}</a></h3>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="secondary" icon-left (click)="callPerson(item)">
+            <ion-icon name="call"></ion-icon> Call
+          </button>
+        <button ion-button color="primary" icon-left (click)="editContactDetail(item)">
+          <ion-icon name="create"></ion-icon> {{ 'shared.Edit' | translate }}
+        </button>
+        <button ion-button color="danger" icon-left (click)="deleteContact(item)">
+          <ion-icon name="trash"></ion-icon> {{ 'shared.Delete' | translate }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="addContact()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

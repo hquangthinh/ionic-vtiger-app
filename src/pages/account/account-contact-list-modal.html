@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{ title }} - Contacts
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">{{ 'shared.Close' | translate }}</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item *ngFor="let item of contacts" (click)="viewContactDetail(item)">        
+        <h2>{{ item.firstName }} {{ item.lastName }}</h2>        
+    </ion-item>
+
+    <ion-item *ngIf="!contacts || contacts.length === 0">
+        <h2>{{ 'shared.No_Data_Available' | translate }}</h2>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

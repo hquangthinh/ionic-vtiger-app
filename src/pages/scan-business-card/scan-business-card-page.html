@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Scan business card</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+
+    <ion-item>
+      <img id="image" [src]="imageSrc" [className]="imgRotateClass"/>
+    </ion-item>
+
+    <ion-item style="text-align:center;">
+      <button ion-button (click)="rotate()">Xoay</button>
+    </ion-item>
+
+    <ion-item *ngIf="showFileUri">
+      <span>{{imageSrc}}</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Ngôn ngữ</ion-label>
+      <ion-select [(ngModel)]="langCode">
+        <ion-option value="eng">English</ion-option>
+        <ion-option value="vie">Vietnamese</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Phương thức scan</ion-label>
+      <ion-select [(ngModel)]="detectionMethod">
+        <ion-option value="method1_msocr">MSOCR</ion-option>
+        <ion-option value="method1_tesseract">Tesseract</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button full (click)="analyzeBizCard()">Nhập Dữ Liệu</button>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list *ngIf="bizCardLines && bizCardLines.length > 0">
+
+    <ion-item *ngFor="let lineItem of bizCardLines" class="biz-card-mapping-item">
+      <ion-input type="text" [(ngModel)]="lineItem.text"></ion-input>
+      <ion-select [(ngModel)]="lineItem.fieldId">
+          <ion-option *ngFor="let field of fieldList" value="{{ field.id }}">{{ field.title }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <button *ngIf="bizCardLines && bizCardLines.length > 0" ion-button full (click)="createContact()">Create Contact</button>
+
+</ion-content>

@@ -1,0 +1,12 @@
+<ion-tabs color="dark">
+    <ion-tab tabIcon="home" [root]="dashboardPage"></ion-tab>
+    <ion-tab tabIcon="calendar" [root]="calendarPage"></ion-tab>
+    <ion-tab tabIcon="alert" [root]="alertPage"></ion-tab>
+    <ion-tab tabIcon="camera" (ionSelect)="scanBusinessCard()"></ion-tab>
+    <ion-tab tabIcon="add-circle" (ionSelect)="quickAdd()"></ion-tab>
+</ion-tabs>
+<!--<ion-tabs>
+  <ion-tab [root]="tab1Root" tabTitle="Login" tabIcon="home"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="SignUp" tabIcon="information-circle"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Crud" tabIcon="contacts"></ion-tab>
+</ion-tabs>-->

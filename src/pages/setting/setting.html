@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'settings.PageTitle' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list> 
+    
+    <ion-item> 
+      <ion-label>{{ 'settings.Language' | translate }}</ion-label>
+      <ion-select [(ngModel)]="appLanguage" (ionChange)="saveChangeLanguage()">
+        <ion-option value="en">English</ion-option>
+        <ion-option value="vi">Tiếng Việt</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{ 'settings.AutoRunSyncAfterLogin' | translate }}</ion-label>
+      <ion-checkbox [(ngModel)]="autoRunSyncAfterLogin" (ionChange)="toggleAutoRunSyncSetting()"></ion-checkbox>
+    </ion-item>
+
+    <ion-item> 
+      <button ion-button full (click)="syncServerData()">{{ 'settings.Sync_Data' | translate }}</button>
+    </ion-item>   
+
+  </ion-list>
+
+  <h3 color="danger" *ngIf="!needRunSync">{{'settings.Last_Run_Sync_Message' | translate}} {{ lastRun ? lastRun.toLocaleDateString() : '' }} {{ lastRun ? lastRun.toLocaleTimeString() : '' }}</h3>  
+  <h3 color="danger" *ngIf="needRunSync">{{'settings.Need_Run_Sync_Message' | translate}} </h3>  
+  
+</ion-content>

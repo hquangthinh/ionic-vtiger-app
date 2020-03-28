@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{'potentials.pageTitleView' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-fab top right >
+    <button ion-fab (click)="editPotentialDetail(model)">
+      <ion-icon name="create"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="tabName">
+      <ion-segment-button value="details">
+        {{'potentials.MainInfoSection' | translate}}
+      </ion-segment-button>
+      <ion-segment-button value="related" (ionSelect)="loadRelatedModules()">
+        {{'potentials.RelatedInfoSection' | translate}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div [ngSwitch]="tabName">
+      <ion-list *ngSwitchCase="'details'">
+          <div *ngFor="let formBlock of model.blocks">
+              <ion-item>
+                  <ion-title>{{ formBlock.label }} </ion-title>
+              </ion-item>
+              <ion-item *ngFor="let fieldModel of formBlock.fields">
+                  <ion-label stacked class="form-label"> {{ fieldModel.label }} </ion-label>
+                  <ion-label *ngIf="fieldModel.value && getFieldType(fieldModel.uitype) === 'dropdown' " padding-bottom> {{ fieldModel.value | formatFieldValueAsString:fieldModel.uitype }} </ion-label>
+                  <ion-label *ngIf="fieldModel.value && getFieldType(fieldModel.uitype) === 'boolean' " padding-bottom> {{ fieldModel.value | formatFieldValueAsString:fieldModel.uitype }} </ion-label>
+                  <ion-label *ngIf="fieldModel.value && getFieldType(fieldModel.uitype) === 'datetime' " padding-bottom> {{ !fieldModel.value ? '---' : fieldModel.value | formatFieldValueAsDateTime:fieldModel.uitype | amDateFormat:'DD-MM-YYYY HH:mm:ss' }} </ion-label>
+                  <ion-label *ngIf="fieldModel.value && getFieldType(fieldModel.uitype) === 'text' " padding-bottom> {{ fieldModel.value | formatFieldValueAsString:fieldModel.uitype }} </ion-label>
+              </ion-item>
+          </div>
+      </ion-list>
+
+      <ion-grid *ngSwitchCase="'related'">
+        <ion-row>
+          <ion-col width-50>
+            <ion-card (click)="viewRelatedModules('Activities')">
+              <ion-card-header color="danger">{{totalRelatedActivities}}</ion-card-header>
+              <ion-card-content class="text-bold">
+                {{'potentials.Activities' | translate}}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col width-50>
+            <ion-card (click)="viewRelatedModules('Contacts')">
+              <ion-card-header color="danger">{{totalRelatedContacts}}</ion-card-header>
+              <ion-card-content class="text-bold">
+                {{'potentials.Contacts' | translate}}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+  </div>
+
+</ion-content>

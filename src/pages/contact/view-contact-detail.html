@@ -1,0 +1,260 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'contacts.pageTitleView' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+          <h3>{{ model.firstname }} {{ model.lastname }}</h3>
+          <!-- <h3>{{ model.lastname }}</h3> -->
+          <p>
+            <a class="text-phone" href="tel:{{model.mobile}}">{{ model.mobile }}</a>
+          </p>
+          <p>
+            <a href="mailto:{{model.email}}">{{ model.email }}</a>
+          </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab top right >
+    <button ion-fab (click)="editContactDetail(model)">
+      <ion-icon name="create"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="tabName">
+      <ion-segment-button value="summary">
+        {{ 'contacts.Basic_Information_Tab' | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="details">
+        {{ 'contacts.Extra_Information_Tab' | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="related" (ionSelect)="loadContactRelatedModules()">
+        {{ 'contacts.Related_Info_Tab' | translate }}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div [ngSwitch]="tabName">
+    <ion-list *ngSwitchCase="'summary'">
+
+      <ion-item>
+        <ion-label stacked class="form-label">{{ 'contacts.FirstName' | translate }}</ion-label>
+        <ion-label>{{ model.firstname ? model.firstname : '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked class="form-label">{{ 'contacts.LastName' | translate }}</ion-label>
+        <ion-label>{{ model.lastname ? model.lastname : '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked class="form-label">{{ 'contacts.Mobile' | translate }}</ion-label>
+        <ion-label>
+          <a class="text-phone" href="tel:{{model.mobile}}">Call {{ model.mobile ? model.mobile : '---' }}</a>
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.email">
+        <ion-label stacked class="form-label">{{ 'contacts.Email' | translate }}</ion-label>
+        <ion-label>
+          <a class="text-phone" href="mailto:{{model.email}}">{{ model.email ? model.email : '---' }}</a>
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.birthday">
+        <ion-label stacked class="form-label">{{ 'contacts.DOB' | translate }}</ion-label>
+        <ion-label>{{ model.birthday ? (model.birthday | amDateFormat:'LL') : '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_771">
+        <ion-label stacked class="form-label">{{ 'contacts.Related_Car' | translate }}</ion-label>
+        <ion-label>{{ model.cf_771 ? model.cf_771 : '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.leadsource">
+        <ion-label stacked class="form-label">{{ 'contacts.Lead_Source' | translate }}</ion-label>
+        <ion-label>{{ model.leadsource ? model.leadsource : '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.mailingstreet">
+        <ion-label stacked class="form-label">{{ 'contacts.Address_Number' | translate }}</ion-label>
+        <ion-label>{{ model.mailingstreet ? model.mailingstreet : '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.mailingstate">
+        <ion-label stacked class="form-label">{{ 'contacts.District' | translate }}</ion-label>
+        <ion-label>{{ model.mailingstate ? model.mailingstate : '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.mailingcity">
+        <ion-label stacked class="form-label">{{ 'contacts.City' | translate }}</ion-label>
+        <ion-label>{{ model.mailingcity ? model.mailingcity : '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.mailingcountry">
+        <ion-label stacked class="form-label">{{ 'contacts.Country' | translate }}</ion-label>
+        <ion-label>{{ model.mailingcountry ? model.mailingcountry : '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.assigned_user_id">
+        <ion-label stacked class="form-label">{{ 'contacts.NVBH' | translate }}</ion-label>
+        <ion-label>{{ model.assigned_user_id ? model.assigned_user_id.label : '' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.isconvertedfromlead">
+        <ion-label stacked class="form-label">{{ 'contacts.IsConvertedFromLead' | translate }}</ion-label>
+        <ion-label>{{ model.isconvertedfromlead == '0' ? 'Không' : 'Có' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.createdtime">
+        <ion-label stacked class="form-label">{{ 'contacts.CreatedDateTime' | translate }}	</ion-label>
+        <ion-label>{{ model.createdtime | amDateFormat:'LL' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.modifiedtime">
+        <ion-label stacked class="form-label">{{ 'contacts.ModifiedDateTime' | translate }}	</ion-label>
+        <ion-label>{{ model.modifiedtime | amDateFormat:'LL' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_835">
+        <ion-label stacked class="form-label">{{ 'contacts.SocialId' | translate }}	</ion-label>
+        <ion-label>{{ model.cf_835 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_837">
+        <ion-label stacked class="form-label">{{ 'contacts.SocialIdDateIssue' | translate }}	</ion-label>
+        <ion-label>{{ model.cf_837 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_839">
+        <ion-label stacked class="form-label">{{ 'contacts.SocialIdPlaceIssue' | translate }}</ion-label>
+        <ion-label>{{ model.cf_839 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.title">
+        <ion-label stacked class="form-label">{{ 'contacts.Position' | translate }}</ion-label>
+        <ion-label>{{ model.title || '---' }}</ion-label>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'details'">
+
+      <ion-item>
+        <ion-title>{{ 'contacts.CarCustomerIsUsing' | translate }}</ion-title>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_775">
+        <ion-label stacked class="form-label">{{ 'contacts.CarMaker' | translate }}</ion-label>
+        <ion-label padding-bottom>{{ model.cf_775 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_797">
+        <ion-label stacked class="form-label">{{ 'contacts.CarTypeCustomerIsUsing' | translate }}</ion-label>
+        <ion-label padding-bottom>{{ model.cf_797 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_777">
+        <ion-label stacked class="form-label">{{ 'contacts.Year' | translate }}</ion-label>
+        <ion-label padding-bottom>{{ model.cf_777 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_779">
+        <ion-label stacked class="form-label">{{ 'contacts.TotalKm' | translate }}</ion-label>
+        <ion-label padding-bottom>{{ model.cf_779 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_861">
+        <ion-label stacked class="form-label">{{ 'contacts.CarPlateNumber' | translate }}</ion-label>
+        <ion-label padding-bottom>{{ model.cf_861 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_863">
+        <ion-label stacked class="form-label">{{ 'contacts.CarBoneNumber' | translate }}</ion-label>
+        <ion-label padding-bottom>{{ model.cf_863 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.cf_865">
+        <ion-label stacked class="form-label">{{ 'contacts.CarEngineNumber' | translate }}</ion-label>
+        <ion-label padding-bottom>{{ model.cf_865 || '---' }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="model.description">
+        <ion-title>{{ 'contacts.Description' | translate }}</ion-title>
+      </ion-item>
+
+      <ion-item *ngIf="model.description">
+        <ion-label>{{ model.description }}</ion-label>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-grid *ngSwitchCase="'related'">
+      <ion-row>
+        <ion-col width-50>
+          <ion-card (click)="viewRelatedModules('Opportunities')">
+            <ion-card-header color="danger">{{totalRelatedOpportunities}}</ion-card-header>
+            <ion-card-content class="text-bold">
+              {{ 'contacts.Opportunities' | translate }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col width-50>
+          <ion-card (click)="viewRelatedModules('Activities')">
+            <ion-card-header color="danger">{{totalRelatedActivities}}</ion-card-header>
+            <ion-card-content class="text-bold">
+              {{ 'contacts.Tasks' | translate }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col width-50>
+          <ion-card (click)="viewRelatedModules('Call')">
+            <ion-card-header color="danger">{{totalCalls}}</ion-card-header>
+            <ion-card-content class="text-bold">
+              {{ 'contacts.Call' | translate }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col width-50>
+          <ion-card (click)="viewRelatedModules('SMS')">
+            <ion-card-header color="danger">{{totalSms}}</ion-card-header>
+            <ion-card-content class="text-bold">
+              {{ 'contacts.SMS' | translate }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col width-50>
+          <ion-card (click)="viewRelatedModules('Meeting')">
+            <ion-card-header color="danger">{{totalMeeting}}</ion-card-header>
+            <ion-card-content class="text-bold">
+              {{ 'contacts.Meeting' | translate }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col width-50>
+          <ion-card (click)="viewRelatedModules('TestDrive')">
+            <ion-card-header color="danger">{{totalTestDrive}}</ion-card-header>
+            <ion-card-content class="text-bold">
+              {{ 'contacts.TestDrive' | translate }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+</ion-content>

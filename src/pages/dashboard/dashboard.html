@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>SalesEDGE CRM</ion-title>
+    <!-- <img class="img-no-bg" width="88.5" height="25" src="assets/images/de-logo_531x150.png"/> -->
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col width-100>
+        <h3><strong>Thống kê trong tháng {{currentMonth}}/{{currentYear}}</strong></h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col width-50>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(0)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="calendar" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{cards[0].titleKey | translate}} ({{cards[0].totalCount}})
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col width-50>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(2)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="contacts" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{cards[2].titleKey | translate}} ({{cards[2].totalCount}})
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col width-50>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(3)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="icomoon-icon-office icon-office dashboard-large-icon" name="office" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{cards[3].titleKey | translate}} ({{cards[3].totalCount}})
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col width-50>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(4)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="logo-usd" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{cards[4].titleKey | translate}} ({{cards[4].totalCount}})
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col width-50>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(1)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="alert" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{ 'Menu.Alerts' | translate}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col width-50>
+        <ion-card class="dashboard-card" color="light" (click)="openPage(5)">
+          <ion-card-header color="whitesmoke">
+            <ion-icon class="dashboard-large-icon" name="settings" item-left></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="text-bold" color="whitesmoke">
+            {{ 'Menu.Settings' | translate}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>
